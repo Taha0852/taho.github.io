@@ -5,57 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TAHO AI</title>
     <style>
-        body { font-family: sans-serif; background: #0b0e14; color: white; display: flex; flex-direction: column; height: 100vh; margin: 0; }
+        body { font-family: 'Segoe UI', sans-serif; background: #0b0e14; color: white; display: flex; flex-direction: column; height: 100vh; margin: 0; }
         #chat-container { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
-        .message { padding: 10px 15px; border-radius: 15px; max-width: 80%; line-height: 1.4; }
-        .user { align-self: flex-end; background: #38bdf8; color: #0b0e14; }
+        .message { padding: 12px 18px; border-radius: 15px; max-width: 80%; animation: fadeIn 0.3s; }
+        .user { align-self: flex-end; background: #38bdf8; color: #0b0e14; font-weight: 500; }
         .taho { align-self: flex-start; background: #1e293b; border: 1px solid #38bdf8; }
-        #input-area { padding: 20px; background: #1e293b; display: flex; gap: 10px; }
-        input { flex: 1; padding: 12px; border-radius: 8px; border: none; outline: none; }
-        button { padding: 10px 20px; background: #38bdf8; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        #input-area { padding: 20px; background: #1e293b; display: flex; gap: 10px; border-top: 1px solid #334155; }
+        input { flex: 1; padding: 12px; border-radius: 8px; border: none; outline: none; background: #0b0e14; color: white; }
+        button { padding: 10px 25px; background: #38bdf8; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
-
-<div id="chat-container">
-    <div class="message taho">Merhaba! Ben Taho. Senin için ne yapabilirim?</div>
-</div>
-
-<div id="input-area">
-    <input type="text" id="userInput" placeholder="Taho'ya bir şey sor...">
-    <button onclick="sendMessage()">Gönder</button>
-</div>
-
-<script>
-    function sendMessage() {
-        const input = document.getElementById('userInput');
-        const container = document.getElementById('chat-container');
-        
-        if (input.value.trim() === "") return;
-
-        // Kullanıcı mesajı
-        container.innerHTML += `<div class="message user">${input.value}</div>`;
-        
-        // Taho'nun cevabı (Mantık kısmı)
-        const userText = input.value.toLowerCase();
-        let response = "Bunu henüz öğrenemedim ama kendimi geliştiriyorum! 🚀";
-
-        if (userText.includes("merhaba") || userText.includes("selam")) {
-            response = "Selam! Ben senin kişisel asistanın Taho. Bugün harika görünüyorsun!";
-        } else if (userText.includes("nasılsın")) {
-            response = "Bir yapay zeka olarak her zaman enerjik ve yardıma hazırım! Sen nasılsın?";
-        } else if (userText.includes("kim yaptı")) {
-            response = "Beni Taha adında dahi bir yazılımcı geliştirdi! 😎";
+    <div id="chat-container">
+        <div class="message taho">Merhaba! Ben Taho. Artık yayındayım! Ne sormak istersin?</div>
+    </div>
+    <div id="input-area">
+        <input type="text" id="userInput" placeholder="Taho'ya yaz...">
+        <button onclick="sendMessage()">Gönder</button>
+    </div>
+    <script>
+        function sendMessage() {
+            const input = document.getElementById('userInput');
+            const container = document.getElementById('chat-container');
+            if (input.value.trim() === "") return;
+            container.innerHTML += `<div class="message user">${input.value}</div>`;
+            const text = input.value.toLowerCase();
+            let response = "Taha beni henüz bu konuda eğitmedi ama öğreneceğim! 🚀";
+            if (text.includes("selam") || text.includes("merhaba")) response = "Selam! Ben Taho. Sana nasıl yardımcı olabilirim?";
+            if (text.includes("nasılsın")) response = "Harikayım! Senin için kod yazmaya hazırım.";
+            setTimeout(() => {
+                container.innerHTML += `<div class="message taho">${response}</div>`;
+                container.scrollTop = container.scrollHeight;
+            }, 500);
+            input.value = "";
         }
-
-        setTimeout(() => {
-            container.innerHTML += `<div class="message taho">${response}</div>`;
-            container.scrollTop = container.scrollHeight;
-        }, 500);
-
-        input.value = "";
-    }
-</script>
-
+    </script>
 </body>
 </html>
